@@ -3,6 +3,7 @@ from uuid6 import uuid7
 
 from quiz.models import Questionnaire
 from user.models import User
+from django.utils.timezone import now
 
 class GameStatus(models.TextChoices):
     ACTIVE = "active", "Active"
@@ -22,18 +23,20 @@ class GameLink(models.Model):
 class GameSession(models.Model):
     id = models.UUIDField(primary_key=True, default=uuid7, editable=False)
     game = models.ForeignKey(Game, on_delete=models.CASCADE)
+    session_status = models.CharField(max_length=10, choices=GameStatus.choices, default=GameStatus.ACTIVE)
     user = models.ForeignKey("user.User", on_delete=models.CASCADE, null=True, blank=True)
     score = models.IntegerField(default=0)
     questionnaire = models.ForeignKey(Questionnaire, on_delete=models.SET_NULL, null=True, blank=True)
 
 class GameAttempts(models.Model):
     id = models.UUIDField(primary_key=True, default=uuid7, editable=False)
+    game = models.ForeignKey(Game, on_delete=models.CASCADE, null=True, blank=True)
     session = models.ForeignKey(GameSession, on_delete=models.CASCADE)
     questionnaire = models.ForeignKey(Questionnaire, on_delete=models.CASCADE)
-    attempt_number = models.IntegerField()
-    user_answer = models.CharField(max_length=255)
+    attempt_number = models.IntegerField(default=0)
+    user_response = models.CharField(max_length=255)
     is_correct = models.BooleanField(default=False)
-    attempted_at = models.DateTimeField(auto_now_add=True)
+    attempted_at = models.DateTimeField(default=now)
 
 class GameInvitee(models.Model):
     id = models.UUIDField(primary_key=True, default=uuid7, editable=False)
