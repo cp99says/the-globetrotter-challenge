@@ -69,43 +69,6 @@ class StartGameView(View):
             return JsonResponse({"error": str(e)}, status=500)
 
 
-# class StartGameSessionView(View):
-#     def post(self, request, *args, **kwargs):
-#         try:
-#             data = json.loads(request.body)
-#             game_id = data.get("game_id")
-#             if not game_id:
-#                 return JsonResponse({"error": "game_id is required"}, status=400)
-#
-#             game = Game.objects.get(id=game_id)
-#             session = GameSessionManager.create_session(game)
-#             questionnaire, error = GameSessionManager.assign_questionnaire(session)
-#             if error:
-#                 return JsonResponse({"error": error}, status=400)
-#
-#             clues = list(Clue.objects.filter(questionnaire=questionnaire).values_list("text", flat=True))
-#             if len(clues) < 2:
-#                 return JsonResponse({"error": "Not enough clues available"}, status=400)
-#
-#             # Generate answer options
-#             correct_answer = questionnaire.city
-#             all_answers = list(Questionnaire.objects.exclude(id=questionnaire.id).values_list("city", flat=True))
-#             wrong_answers = random.sample(all_answers, min(2, len(all_answers)))
-#
-#             options = [correct_answer] + wrong_answers
-#             random.shuffle(options)
-#
-#             return JsonResponse({
-#                 "session_id": str(session.id),
-#                 "questionnaire_id": str(questionnaire.id),
-#                 "question": clues[:2],
-#                 "options": options  # Adding options for user selection
-#             }, status=201)
-#         except Game.DoesNotExist:
-#             return JsonResponse({"error": "Invalid game_id"}, status=404)
-#         except Exception as e:
-#             return JsonResponse({"error": str(e)}, status=500)
-
 
 
 class EndGameSessionView(View):
