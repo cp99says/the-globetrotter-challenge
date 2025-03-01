@@ -1,5 +1,7 @@
 from django.db import models
 from uuid6 import uuid7
+
+from quiz.models import Questionnaire
 from user.models import User
 
 class GameStatus(models.TextChoices):
@@ -8,6 +10,7 @@ class GameStatus(models.TextChoices):
 
 class Game(models.Model):
     id = models.UUIDField(primary_key=True, default=uuid7, editable=False)
+    host = models.ForeignKey("user.User", on_delete=models.CASCADE, null=True, blank=True)
     game_status = models.CharField(
         max_length=10, choices=GameStatus.choices, default=GameStatus.ACTIVE
     )
@@ -21,6 +24,16 @@ class GameSession(models.Model):
     game = models.ForeignKey(Game, on_delete=models.CASCADE)
     user = models.ForeignKey("user.User", on_delete=models.CASCADE, null=True, blank=True)
     score = models.IntegerField(default=0)
+    questionnaire = models.ForeignKey(Questionnaire, on_delete=models.SET_NULL, null=True, blank=True)
+
+class GameAttempts(models.Model):
+    id = models.UUIDField(primary_key=True, default=uuid7, editable=False)
+    session = models.ForeignKey(GameSession, on_delete=models.CASCADE)
+    questionnaire = models.ForeignKey(Questionnaire, on_delete=models.CASCADE)
+    attempt_number = models.IntegerField()
+    user_answer = models.CharField(max_length=255)
+    is_correct = models.BooleanField(default=False)
+    attempted_at = models.DateTimeField(auto_now_add=True)
 
 class GameInvitee(models.Model):
     id = models.UUIDField(primary_key=True, default=uuid7, editable=False)
