@@ -24,7 +24,7 @@ class StartGameView(View):
                 if not questionnaire:
                     return JsonResponse({"error": "No questionnaires available"}, status=400)
 
-                clues = list(Clue.objects.filter(questionnaire=questionnaire).values_list("text", flat=True)) #fetch clues for the quiz id in line 16
+                clues = list(Clue.objects.filter(questionnaire=questionnaire).values_list("text", flat=True)) #fetch clues for the quiz id in line 19
                 if len(clues) < 2:
                     return JsonResponse({"error": "Not enough clues available"}, status=400)
 
@@ -98,10 +98,8 @@ class AnswerSubmissionView(View):
             with transaction.atomic():
                 # Create a new attempt record
                 is_correct = user_response.strip().lower() == correct_answer.strip().lower()
-                print('is_correct ->', is_correct)
                 attempt_number = attempt_count + 1
                 print('attempt_number ->', attempt_number)
-                # creating an attempt
                 attempt = GameAttempts.objects.create(
                     game_id=game_id,
                     session_id=session_id,
@@ -145,14 +143,10 @@ class AnswerSubmissionView(View):
                         "correct_answer": correct_answer,
                         "attempt_number": attempt_number
                     }, status=200)
-                elif is_correct:
-                    return JsonResponse({
-                        "message": "tu sahi hai",
-                        "attempt_number": attempt_number
-                    }, status=200)
+
 
                 return JsonResponse({
-                    "message": "Oops! Wrong answer, try again!",
+                    "message": "Try again",
                     "attempt_number": attempt_number
                 }, status=200)
 
