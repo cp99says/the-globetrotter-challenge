@@ -8,7 +8,6 @@ class GameStatus(models.TextChoices):
 
 class Game(models.Model):
     id = models.UUIDField(primary_key=True, default=uuid7, editable=False)
-    host = models.ForeignKey(User, on_delete=models.CASCADE)
     game_status = models.CharField(
         max_length=10, choices=GameStatus.choices, default=GameStatus.ACTIVE
     )
@@ -20,7 +19,7 @@ class GameLink(models.Model):
 class GameSession(models.Model):
     id = models.UUIDField(primary_key=True, default=uuid7, editable=False)
     game = models.ForeignKey(Game, on_delete=models.CASCADE)
-    user = models.ForeignKey(User, on_delete=models.CASCADE)
+    user = models.ForeignKey("user.User", on_delete=models.CASCADE, null=True, blank=True)
     score = models.IntegerField(default=0)
 
 class GameInvitee(models.Model):

@@ -9,7 +9,7 @@ class UserType(models.TextChoices):
 
 class User(models.Model):
     id = models.UUIDField(primary_key=True, default=uuid7, editable=False)
-    username = models.CharField(max_length=100, unique=True)
+    username = models.CharField(max_length=100)
     user_type = models.CharField(
         max_length=10, choices=UserType.choices, default=UserType.GUEST
     )
