@@ -5,3 +5,4 @@ class AnswerSubmissionSerializer(serializers.Serializer):
     session_id = serializers.CharField(max_length=36)
     questionnaire_id = serializers.CharField(max_length=36)
     response = serializers.CharField(max_length=255)
+    user_id = serializers.CharField(max_length=255)

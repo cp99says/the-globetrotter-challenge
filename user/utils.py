@@ -1,4 +1,5 @@
 import random
+import string
 
 def get_random_number():
     return random.randint(1, 5)
@@ -30,3 +31,10 @@ def get_funky_response(category):
     }
 
     return response_map[category][get_random_number()]
+
+
+def generate_invite_code():
+    return "".join(random.choices(string.ascii_letters + string.digits, k=7))
+
+def generate_random_username(length=8):
+    return ''.join(random.choices(string.ascii_letters + string.digits, k=length))

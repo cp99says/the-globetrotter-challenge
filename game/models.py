@@ -20,7 +20,7 @@ class GameSession(models.Model):
     id = models.UUIDField(primary_key=True, default=uuid7, editable=False)
     game = models.ForeignKey(Game, on_delete=models.CASCADE)
     session_status = models.CharField(max_length=10, choices=GameStatus.choices, default=GameStatus.ACTIVE)
-    user = models.ForeignKey("user.User", on_delete=models.CASCADE, null=True, blank=True)
+    user = models.ForeignKey(User, on_delete=models.CASCADE)
     score = models.IntegerField(default=0)
     questionnaire = models.ForeignKey(Questionnaire, on_delete=models.SET_NULL, null=True, blank=True)
 
@@ -34,6 +34,7 @@ class GameAttempts(models.Model):
     game = models.ForeignKey(Game, on_delete=models.CASCADE, null=True, blank=True)
     session = models.ForeignKey(GameSession, on_delete=models.CASCADE)
     questionnaire = models.ForeignKey(Questionnaire, on_delete=models.CASCADE)
+    user = models.ForeignKey(User, on_delete=models.CASCADE)
     attempt_number = models.IntegerField(default=0)
     user_response = models.CharField(max_length=255)
     is_correct = models.BooleanField(default=False)
