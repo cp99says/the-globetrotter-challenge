@@ -40,7 +40,8 @@ INSTALLED_APPS = [
     'rest_framework',
     'game',
     'user',
-    'quiz'
+    'quiz',
+    'django_extensions'
 ]
 
 MIDDLEWARE = [
