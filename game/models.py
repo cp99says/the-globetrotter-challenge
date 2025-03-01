@@ -16,10 +16,6 @@ class Game(models.Model):
         max_length=10, choices=GameStatus.choices, default=GameStatus.ACTIVE
     )
 
-class GameLink(models.Model):
-    game = models.OneToOneField(Game, on_delete=models.CASCADE)
-    link = models.TextField(unique=True)
-
 class GameSession(models.Model):
     id = models.UUIDField(primary_key=True, default=uuid7, editable=False)
     game = models.ForeignKey(Game, on_delete=models.CASCADE)
@@ -27,6 +23,11 @@ class GameSession(models.Model):
     user = models.ForeignKey("user.User", on_delete=models.CASCADE, null=True, blank=True)
     score = models.IntegerField(default=0)
     questionnaire = models.ForeignKey(Questionnaire, on_delete=models.SET_NULL, null=True, blank=True)
+
+class GameLink(models.Model):
+    game = models.OneToOneField(Game, on_delete=models.CASCADE)
+    session = models.ForeignKey(GameSession, on_delete=models.CASCADE)
+    link = models.TextField(unique=True)
 
 class GameAttempts(models.Model):
     id = models.UUIDField(primary_key=True, default=uuid7, editable=False)
@@ -41,6 +42,7 @@ class GameAttempts(models.Model):
 class GameInvitee(models.Model):
     id = models.UUIDField(primary_key=True, default=uuid7, editable=False)
     game = models.ForeignKey(Game, on_delete=models.CASCADE)
+    session = models.ForeignKey(GameSession, on_delete=models.CASCADE)
     invitor = models.ForeignKey(User, on_delete=models.CASCADE, related_name="invites_sent")
     invitee = models.ForeignKey(User, on_delete=models.CASCADE, related_name="invites_received")
 
