@@ -41,7 +41,7 @@ Ensure you have the following installed before running the application:
 
 ```bash
 # Clone the repository
-git clone https://github.com/your-repo/game-app.git
+git clone https://github.com/cp99says/the-globetrotter-challenge.git
 cd game-app
 
 # Install dependencies
@@ -62,9 +62,15 @@ The application consists of multiple tables, including:
 - `Game` - Stores details about each game session.
 - `GameSession` - Tracks user participation and progress.
 - `GameAttempts` - Stores user responses to quiz questions.
+- `GameLink` - To store the shared links of the game to a session.
+- `GameInvitee` - To store the data of the invitor and invitee for the game session
 - `Leaderboard` - Maintains rankings and scores.
 - `Questionnaire` - Holds trivia questions and their metadata.
+- `Clue` - Holds Clues for questions.
+- `FunFact` - Holds Fun Facts for  questions.
+- `Trivia` - Holds trivia for questions.
 - `User` - Stores user details and authentication data.
+
 
 **Schema Diagram:**
 ![Database Schema](db%20schema.png)
