@@ -1,4 +1,4 @@
-## Game Application - README
+## The Globetrotter - README
 
 ### Overview
 Welcome to the Game Application, an interactive platform where users can participate in exciting quizzes and trivia games. The application seamlessly manages game sessions, tracks user scores, and ensures smooth interaction between players and the game server.
