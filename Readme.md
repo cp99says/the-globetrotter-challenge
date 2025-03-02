@@ -1,122 +1,207 @@
-Game Application - README
+## Game Application - README
 
-Overview
+### Overview
+Welcome to the Game Application, an interactive platform where users can participate in exciting quizzes and trivia games. The application seamlessly manages game sessions, tracks user scores, and ensures smooth interaction between players and the game server.
 
-This project is a monolithic game application that enables users to participate in interactive quizzes and trivia games. The system manages game sessions, tracks user scores, and facilitates seamless interaction between players and the game server.
 
-Architecture
+---
+
+## Architecture
 
 The application follows a monolithic architecture and is built with a structured approach, including the following key components:
 
-Database Schema: PostgreSQL is used for storing game data, user sessions, and attempts.
+- **Database Schema**: Uses PostgreSQL for secure and structured data storage.
+- **API Flow**: The backend exposes a RESTful API to handle game logic and user interactions.
+- **Low-Level Design (LLD)**: A detailed class diagram illustrates the interaction between various components, such as game managers and session handlers.
+- **Data Flow Diagram (DFD)**: Represents how data moves through the system, showing different data sources and interactions.
 
-API Flow: The backend exposes a RESTful API to handle game logic and user interactions.
+---
 
-Low-Level Design (LLD): A detailed class diagram illustrates the interaction between various components, such as game managers and session handlers.
+## Features
+- Game Creation & Management
+- Real-time Question Fetching
+- Answer Validation & Scoring
+- Leaderboard Tracking
+- Game Session Management
 
-Data Flow Diagram (DFD): Represents how data moves through the system, showing different data sources and interactions.
+---
 
-Features
+# Getting Started
 
-User Authentication (if applicable)
+## Prerequisites
 
-Game Creation & Management
+Ensure you have the following installed before running the application:
 
-Real-time Question Fetching
+- Python 3.x
+- Django
+- PostgreSQL
+- Django REST Framework
 
-Answer Validation & Scoring
+## Installation
 
-Leaderboard Tracking
+```bash
+# Clone the repository
+git clone https://github.com/your-repo/game-app.git
+cd game-app
 
-Game Session Management
-
-System Design Components
-
-1. Database Schema
-
-The application consists of multiple tables, including:
-
-Game - Stores details about each game session.
-
-GameSession - Tracks user participation and progress.
-
-GameAttempts - Stores user responses to quiz questions.
-
-Leaderboard - Maintains rankings and scores.
-
-Questionnaire - Holds trivia questions and their metadata.
-
-User - Stores user details and authentication data.
-
-2. API Flow
-
-The API follows a structured flow where:
-
-The user starts a game via StartGameView.
-
-The game session is created and assigned to the user.
-
-Questions are fetched dynamically via NextQuestionView.
-
-Users submit answers via AnswerSubmissionView, where validation occurs.
-
-Scores and game statistics are updated and fetched as needed.
-
-The game ends via EndGameSessionView, returning a summary to the user.
-
-3. Sequence Diagram
-
-The sequence diagram demonstrates the step-by-step interaction between the user, API endpoints, and the database. It includes processes like game initialization, answer submission, result calculation, and session termination.
-
-4. Data Flow Diagram (DFD)
-
-The DFD illustrates the data movement in the application, showcasing how input data (such as user responses) flows through various processing stages before producing results (such as updated leaderboards).
-
-Setup Instructions
-
-To set up and run the application locally:
-
-Clone the repository:
-
-git clone <repository-url>
-
-Navigate to the project directory:
-
-cd game-application
-
-Install dependencies:
-
+# Install dependencies
 pip install -r requirements.txt
 
-Set up the database:
-
+# Set up the database
 python manage.py migrate
 
-Run the server:
-
+# Start the server
 python manage.py runserver
+```
 
-Access the API via http://localhost:8000/api/
+## **System Design Components**
 
-Future Improvements
+### **1. Database Schema**
+The application consists of multiple tables, including:
 
-Implement real-time multiplayer mode.
+- `Game` - Stores details about each game session.
+- `GameSession` - Tracks user participation and progress.
+- `GameAttempts` - Stores user responses to quiz questions.
+- `Leaderboard` - Maintains rankings and scores.
+- `Questionnaire` - Holds trivia questions and their metadata.
+- `User` - Stores user details and authentication data.
 
-Add a microservices architecture for better scalability.
+**Schema Diagram:**
+![Database Schema](db%20schema.png)
 
-Integrate third-party authentication.
+---
 
-Implement caching mechanisms to optimize performance.
+### **2. API Flow**
+The API follows a structured flow where:
 
-Contributing
+1. The user starts a game via `StartGameView`.
+2. The game session is created and assigned to the user.
+3. Questions are fetched dynamically via `NextQuestionView`.
+4. Users submit answers via `AnswerSubmissionView`, where validation occurs.
+5. Scores and game statistics are updated and fetched as needed.
+6. The game ends via `EndGameSessionView`, returning a summary to the user.
 
-If you would like to contribute, please fork the repository and submit a pull request with detailed descriptions of your changes.
+**API Flow Diagram:**
+![API Flow](API%20flow.png)
 
-License
+---
 
-This project is licensed under the MIT License. See LICENSE for more details.
+### **3. Sequence Diagram**
+The sequence diagram demonstrates the step-by-step interaction between the user, API endpoints, and the database. It includes processes like game initialization, answer submission, result calculation, and session termination.
+![Sequence Flow](sequence%20diagram.png)
+---
 
-Additional Notes
+### **4. Data Flow Diagram (DFD)**
+The DFD illustrates the data movement in the application, showcasing how input data (such as user responses) flows through various processing stages before producing results (such as updated leaderboards).
 
-The attached diagrams provide a detailed visualization of the system, helping developers understand how the application components interact. Be sure to refer to them while working on the project.
+**DFD Image:**
+![Data Flow Diagram](data%20flow%20diagram.png)
+
+# API Endpoints
+
+## Start a Game 🎮
+
+**POST** `/start-game/`
+
+### Response:
+```json
+{
+  "game_id": "12345",
+  "session_id": "67890",
+  "user_id": "abcde",
+  "question": ["Clue 1", "Clue 2"],
+  "options": ["Paris", "London", "Berlin"]
+}
+```
+### Submit an Answer ✅
+**POST** `/submit-answer/`
+### Request:
+```json
+{
+    "game_id": "019552ca-29e9-7a59-8219-cc469eef6250",
+    "session_id": "019552ca-29f5-7af2-9a4c-c8a0e9f2eee9",
+    "questionnaire_id": "01955020-dba7-7aad-8b35-3d7a3200e220",
+    "user_id": "019552ca-29f4-7030-904c-24c62c9cb8c6",
+    "response": "Paris"
+}
+```
+### Response:
+```json
+{
+  "message": "Oopsie! \ud83d\ude48 That\u2019s not it. But hey, nobody\u2019s perfect!", 
+  "attempt_number": 2
+}
+```
+### End Game Session 🏁
+
+**POST** `/api/end-session/`
+
+### Request:
+```json
+{
+    "session_id": "019550fb-67ad-7824-a219-3ff83907f686"
+}
+```
+### Response:
+```json
+{
+    "message": "Session ended successfully",
+    "correct_submissions": 1,
+    "total_attempts": 2
+}
+```
+
+### Generate Invite Link 🔗
+
+**POST** `/api/invite-link/`
+
+### Request:
+```json
+{
+    "username": "cp99says",
+    "game_id": "019552ca-29e9-7a59-8219-cc469eef6250",
+    "session_id": "019552ca-29f5-7af2-9a4c-c8a0e9f2eee9",
+    "user_id": "019552ca-29f4-7030-904c-24c62c9cb8c6"
+}
+```
+### Response:
+```json
+{
+    "invite-link": "https://demo-game.com/xhdeyu9"
+}
+```
+
+### Join Session Invite Link 🔗
+
+**POST** `/api/join-session/`
+
+### Request:
+```json
+{
+    "invite_code": "plGCJJ3",
+    "username": "cp99says2"
+}
+```
+### Response:
+```json
+{
+    "message": "You've successfully joined the session! Let's play!"
+}
+```
+
+
+### View friend score
+
+**GET** `/api/view-friend-score/?username=test123`
+
+
+### Response:
+```json
+{
+    "invitor": "cp99says",
+    "correct_answers": 3,
+    "incorrect_answers": 6,
+    "total_attempts": 9
+}
+```
 
