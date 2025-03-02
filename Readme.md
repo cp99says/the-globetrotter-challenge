@@ -32,7 +32,7 @@ The application follows a monolithic architecture and is built with a structured
 
 Ensure you have the following installed before running the application:
 
-- Python 3.x
+- Python >= 3.10
 - Django
 - PostgreSQL
 - Django REST Framework
