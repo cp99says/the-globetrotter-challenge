@@ -104,6 +104,8 @@ The DFD illustrates the data movement in the application, showcasing how input d
 ![Data Flow Diagram](data%20flow%20diagram.png)
 
 # API Endpoints
+## Baseurl:- http://65.2.33.122:8000/api/
+#### I could have used nginx's reverse proxy to hide the IP, but my domain expired :')
 
 ## Start a Game 🎮
 
